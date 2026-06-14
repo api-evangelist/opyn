@@ -2,32 +2,30 @@ aid: opyn
 url: https://raw.githubusercontent.com/api-evangelist/opyn/refs/heads/main/apis.yml
 name: Opyn
 kind: company
-description: >-
-  Opyn is a DeFi options protocol on Ethereum mainnet best known for Squeeth
-  (squared ETH), a Power Perpetual that gives traders continuous exposure to
-  ETH² without liquidation risk on long positions. The protocol encompasses the
-  Gamma Protocol (v2 options with cash-settled European options), the Crab
-  Strategy (automated ETH²/ETH delta-neutral vault), Bull Strategy, and Opyn
-  Markets (concentrated-liquidity perps). Developers integrate via The Graph
-  GraphQL subgraph for querying squeeth positions, vault data, funding rates,
-  and on-chain event history, combined with direct Ethereum smart-contract
-  interaction through the Controller, Oracle, WPowerPerp, and Strategy
+description: Opyn is a DeFi options protocol on Ethereum mainnet best known for Squeeth
+  (squared ETH), a Power Perpetual that gives traders continuous exposure to ETH²
+  without liquidation risk on long positions. The protocol encompasses the Gamma Protocol
+  (v2 options with cash-settled European options), the Crab Strategy (automated ETH²/ETH
+  delta-neutral vault), Bull Strategy, and Opyn Markets (concentrated-liquidity perps).
+  Developers integrate via The Graph GraphQL subgraph for querying squeeth positions,
+  vault data, funding rates, and on-chain event history, combined with direct Ethereum
+  smart-contract interaction through the Controller, Oracle, WPowerPerp, and Strategy
   contracts. No centralised REST API key is required; data access is permissionless
   through the subgraph and blockchain.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - DeFi
-  - Options
-  - Ethereum
-  - Squeeth
-  - Power Perpetual
-  - Derivatives
-  - Cryptocurrency
-  - Web3
-  - Smart Contracts
-  - Subgraph
-  - Crab Strategy
-  - Vault
+- DeFi
+- Options
+- Ethereum
+- Squeeth
+- Power Perpetual
+- Derivatives
+- Cryptocurrency
+- Web3
+- Smart Contracts
+- Subgraph
+- Crab Strategy
+- Vault
 created: '2026-06-14'
 modified: '2026-06-14'
 specificationVersion: '0.19'
@@ -35,136 +33,131 @@ x-category: Cryptocurrency
 x-tier: 2
 x-type: company
 apis:
-  - aid: opyn:squeeth-subgraph-api
-    name: Opyn Squeeth Subgraph API
-    description: >-
-      GraphQL API powered by The Graph that indexes all on-chain Squeeth events
-      on Ethereum mainnet. Enables developers to query oSQTH positions, short
-      vaults, vault collateral and debt, funding (mark/index) history, Crab
-      strategy deposits and withdrawals, and liquidation events without running
-      an archive node. The subgraph ID on The Graph network is
-      Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r.
-    humanURL: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r?view=Overview&chain=mainnet
-    baseURL: https://gateway.thegraph.com/api
-    tags:
-      - Squeeth
-      - Subgraph
-      - GraphQL
-      - Positions
-      - Vaults
-      - Funding Rate
-      - Crab Strategy
-      - Liquidations
-    properties:
-      - type: Documentation
-        url: https://opyn.gitbook.io/squeeth
-      - type: GraphQL
-        url: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r?view=Playground&chain=mainnet
-      - type: GitHubRepository
-        url: https://github.com/opynfinance/squeeth-monorepo
-      - type: CodeExamples
-        title: Squeeth Monorepo (Frontend + Contracts)
-        url: https://github.com/opynfinance/squeeth-monorepo
-
-  - aid: opyn:gamma-subgraph-api
-    name: Opyn Gamma Subgraph API
-    description: >-
-      GraphQL API via The Graph that indexes the Gamma Protocol (Opyn v2)
-      on Ethereum mainnet. Covers oToken creation, option series, vault
-      collateral, minting and burning events, settlement, and operator
-      authorisations for European cash-settled options. Useful for querying
-      options series data, vault collateral ratios, and historical settlement
-      prices.
-    humanURL: https://github.com/opynfinance/Gamma-Subgraph
-    baseURL: https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
-    tags:
-      - Options
-      - Gamma Protocol
-      - Subgraph
-      - GraphQL
-      - oTokens
-      - Vaults
-      - Settlement
-    properties:
-      - type: Documentation
-        url: https://github.com/opynfinance/v2-documentation
-      - type: GraphQL
-        url: https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
-      - type: GitHubRepository
-        url: https://github.com/opynfinance/Gamma-Subgraph
-      - type: GitHubRepository
-        title: Opyn v2 Documentation
-        url: https://github.com/opynfinance/v2-documentation
-
-  - aid: opyn:squeeth-portal-api
-    name: Squeeth Portal Auction API
-    description: >-
-      Web interface and data feed for the Crab Strategy weekly auction
-      mechanism. The Squeeth Portal at squeethportal.xyz provides auction
-      status, hedging queue, and rebalancing parameters used by Crab v2 and
-      Jumbo Crab vaults. Developers can read auction state directly from the
-      CrabStrategyV2 contract (0x3B960E47784150F5a63777201ee2B15253D713e8)
-      on Ethereum mainnet.
-    humanURL: https://www.squeethportal.xyz/auction
-    baseURL: https://www.squeethportal.xyz
-    tags:
-      - Auction
-      - Crab Strategy
-      - Hedging
-      - Rebalancing
-      - Squeeth
-    properties:
-      - type: Documentation
-        url: https://opyn.gitbook.io/squeeth/crab-strategy/introduction
-      - type: Interface
-        url: https://www.squeethportal.xyz/auction
-      - type: GitHubRepository
-        url: https://github.com/opynfinance/squeeth-monorepo
-
-common:
-  - type: Website
-    url: https://www.opyn.co
-  - type: Website
-    title: Squeeth App
-    url: https://squeeth.opyn.co
+- aid: opyn:squeeth-subgraph-api
+  name: Opyn Squeeth Subgraph API
+  description: GraphQL API powered by The Graph that indexes all on-chain Squeeth
+    events on Ethereum mainnet. Enables developers to query oSQTH positions, short
+    vaults, vault collateral and debt, funding (mark/index) history, Crab strategy
+    deposits and withdrawals, and liquidation events without running an archive node.
+    The subgraph ID on The Graph network is Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r.
+  humanURL: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r?view=Overview&chain=mainnet
+  baseURL: https://gateway.thegraph.com/api
+  tags:
+  - Squeeth
+  - Subgraph
+  - GraphQL
+  - Positions
+  - Vaults
+  - Funding Rate
+  - Crab Strategy
+  - Liquidations
+  properties:
   - type: Documentation
     url: https://opyn.gitbook.io/squeeth
-  - type: GitHubOrganization
-    url: https://github.com/opynfinance
-  - type: Twitter
-    url: https://x.com/opyn_
-  - type: Discord
-    url: https://discord.gg/2NFdXaE
-  - type: Medium
-    url: https://medium.com/opyn
-  - type: BugBounty
-    url: https://immunefi.com/bounty/opyn/
-  - type: Audits
-    url: https://opyn.gitbook.io/squeeth/resources/audits-and-insurance
-  - type: SmartContracts
-    title: Controller (Mainnet)
-    url: https://etherscan.io/address/0x64187ae08781B09368e6253F9E94951243A493D5
-  - type: SmartContracts
-    title: WPowerPerp / oSQTH (Mainnet)
-    url: https://etherscan.io/address/0xf1B99e3E573A1a9C5E6B2Ce818b617F0E664E86B
-  - type: SmartContracts
-    title: CrabStrategyV2 (Mainnet)
-    url: https://etherscan.io/address/0x3B960E47784150F5a63777201ee2B15253D713e8
-  - type: GraphExplorer
-    title: Opyn Squeeth Subgraph (The Graph)
-    url: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r
-  - type: Plans
-    url: plans/opyn-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/opyn-rate-limits.yml
-  - type: FinOps
-    url: finops/opyn-finops.yml
+  - type: GraphQL
+    url: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r?view=Playground&chain=mainnet
+  - type: GitHubRepository
+    url: https://github.com/opynfinance/squeeth-monorepo
+  - type: CodeExamples
+    title: Squeeth Monorepo (Frontend + Contracts)
+    url: https://github.com/opynfinance/squeeth-monorepo
+- aid: opyn:gamma-subgraph-api
+  name: Opyn Gamma Subgraph API
+  description: GraphQL API via The Graph that indexes the Gamma Protocol (Opyn v2)
+    on Ethereum mainnet. Covers oToken creation, option series, vault collateral,
+    minting and burning events, settlement, and operator authorisations for European
+    cash-settled options. Useful for querying options series data, vault collateral
+    ratios, and historical settlement prices.
+  humanURL: https://github.com/opynfinance/Gamma-Subgraph
+  baseURL: https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
+  tags:
+  - Options
+  - Gamma Protocol
+  - Subgraph
+  - GraphQL
+  - oTokens
+  - Vaults
+  - Settlement
+  properties:
+  - type: Documentation
+    url: https://github.com/opynfinance/v2-documentation
+  - type: GraphQL
+    url: https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
+  - type: GitHubRepository
+    url: https://github.com/opynfinance/Gamma-Subgraph
+  - type: GitHubRepository
+    title: Opyn v2 Documentation
+    url: https://github.com/opynfinance/v2-documentation
+  - url: graphql/opyn-schema.graphql
+    type: GraphQLSchema
+  - url: graphql/opyn-graphql.md
+    type: GraphQL
+- aid: opyn:squeeth-portal-api
+  name: Squeeth Portal Auction API
+  description: Web interface and data feed for the Crab Strategy weekly auction mechanism.
+    The Squeeth Portal at squeethportal.xyz provides auction status, hedging queue,
+    and rebalancing parameters used by Crab v2 and Jumbo Crab vaults. Developers can
+    read auction state directly from the CrabStrategyV2 contract (0x3B960E47784150F5a63777201ee2B15253D713e8)
+    on Ethereum mainnet.
+  humanURL: https://www.squeethportal.xyz/auction
+  baseURL: https://www.squeethportal.xyz
+  tags:
+  - Auction
+  - Crab Strategy
+  - Hedging
+  - Rebalancing
+  - Squeeth
+  properties:
+  - type: Documentation
+    url: https://opyn.gitbook.io/squeeth/crab-strategy/introduction
+  - type: Interface
+    url: https://www.squeethportal.xyz/auction
+  - type: GitHubRepository
+    url: https://github.com/opynfinance/squeeth-monorepo
+common:
+- type: Website
+  url: https://www.opyn.co
+- type: Website
+  title: Squeeth App
+  url: https://squeeth.opyn.co
+- type: Documentation
+  url: https://opyn.gitbook.io/squeeth
+- type: GitHubOrganization
+  url: https://github.com/opynfinance
+- type: Twitter
+  url: https://x.com/opyn_
+- type: Discord
+  url: https://discord.gg/2NFdXaE
+- type: Medium
+  url: https://medium.com/opyn
+- type: BugBounty
+  url: https://immunefi.com/bounty/opyn/
+- type: Audits
+  url: https://opyn.gitbook.io/squeeth/resources/audits-and-insurance
+- type: SmartContracts
+  title: Controller (Mainnet)
+  url: https://etherscan.io/address/0x64187ae08781B09368e6253F9E94951243A493D5
+- type: SmartContracts
+  title: WPowerPerp / oSQTH (Mainnet)
+  url: https://etherscan.io/address/0xf1B99e3E573A1a9C5E6B2Ce818b617F0E664E86B
+- type: SmartContracts
+  title: CrabStrategyV2 (Mainnet)
+  url: https://etherscan.io/address/0x3B960E47784150F5a63777201ee2B15253D713e8
+- type: GraphExplorer
+  title: Opyn Squeeth Subgraph (The Graph)
+  url: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r
+- type: Plans
+  url: plans/opyn-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/opyn-rate-limits.yml
+- type: FinOps
+  url: finops/opyn-finops.yml
 integrations:
-  - name: Ethereum
-  - name: The Graph
-  - name: Uniswap V3
-  - name: Immunefi
-  - name: Sherlock
+- name: Ethereum
+- name: The Graph
+- name: Uniswap V3
+- name: Immunefi
+- name: Sherlock
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
