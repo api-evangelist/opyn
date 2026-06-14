@@ -1,0 +1,120 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Opyn
+providerId: opyn
+created: '2026-06-14'
+modified: '2026-06-14'
+tags:
+  - DeFi
+  - Options
+  - Ethereum
+  - Squeeth
+  - GraphQL
+  - Rate Limiting
+description: >-
+  Rate limit information for Opyn protocol data access. Opyn itself does not
+  impose API-level rate limits because it is a permissionless on-chain protocol.
+  Practical rate limits are imposed by the underlying data-access layer chosen
+  by the developer: The Graph hosted service, The Graph decentralised network,
+  or a third-party Ethereum RPC provider (Infura, Alchemy, QuickNode, etc.).
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  serviceUnavailable: 503
+limits:
+  - tier: hosted-service
+    name: The Graph Hosted Service (Free)
+    scope: ip-address
+    metric: requests_per_second
+    limit: 5
+    burst: 10
+    timeFrame: second
+    applies:
+      - https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
+    description: >-
+      The Graph's hosted service is free but subject to fair-use throttling.
+      Sustained query rates above ~5 RPS per IP may be throttled. For
+      production workloads, migrate to the decentralised network with an API key.
+
+  - tier: decentralised-network
+    name: The Graph Decentralised Network
+    scope: api-key
+    metric: requests_per_second
+    limit: 50
+    burst: 100
+    timeFrame: second
+    applies:
+      - https://gateway.thegraph.com/api
+    description: >-
+      The Graph's decentralised gateway enforces rate limits per API key.
+      Default limits for new keys are approximately 50 RPS; enterprise keys
+      can be provisioned with higher quotas. Contact The Graph team for
+      elevated limits. Rate limits are controlled by The Graph, not Opyn.
+
+  - tier: rpc-free
+    name: Ethereum RPC (Free Tier — Infura/Alchemy)
+    scope: api-key
+    metric: requests_per_day
+    limit: 100000
+    burst: 10
+    timeFrame: day
+    applies:
+      - https://mainnet.infura.io/v3
+      - https://eth-mainnet.alchemyapi.io/v2
+    description: >-
+      Free-tier Ethereum RPC providers (Infura, Alchemy) typically allow
+      100,000 compute units or requests per day. Bursts above ~10 RPS on
+      free tiers are commonly throttled. For high-frequency contract reads
+      (e.g., polling oracle TWAP or vault collateral), use a paid RPC plan.
+
+  - tier: subgraph-query-complexity
+    name: Subgraph Query Complexity Limit
+    scope: per-query
+    metric: complexity_units
+    limit: 1000
+    burst: null
+    timeFrame: per_query
+    applies:
+      - https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
+      - https://gateway.thegraph.com/api
+    description: >-
+      The Graph enforces query complexity limits. Deeply nested queries or
+      large result sets (e.g., fetching thousands of vaults in one call) may
+      be rejected. Use pagination (first/skip or cursor-based) and limit
+      nested field depth to avoid complexity errors.
+
+recoveryStrategies:
+  - name: Paginate Large Queries
+    description: >-
+      Use The Graph's first/skip pagination or where-based cursor pagination
+      to break large data fetches into pages of 100-1000 entities.
+  - name: Cache Subgraph Responses
+    description: >-
+      Cache GraphQL responses for 30-60 seconds for data that does not need
+      real-time freshness (e.g., historical vault snapshots, closed positions).
+  - name: Exponential Backoff on 429
+    description: >-
+      On receiving HTTP 429, back off exponentially starting at 1 second,
+      doubling up to a 32-second ceiling. Honour Retry-After if present.
+  - name: Switch to Decentralised Network for Production
+    description: >-
+      The Graph hosted service is deprecated for production use. Migrate to
+      the decentralised network (gateway.thegraph.com) with a paid API key
+      for SLA-backed access and higher rate limits.
+  - name: Use eth_call Batching for Contract Reads
+    description: >-
+      When polling multiple contract state variables (collateral ratio, TWAP
+      price, vault count), batch eth_call requests using a multicall contract
+      (e.g., Multicall3) to reduce RPC call count.
+
+notes:
+  - Opyn does not operate a centralised REST API and therefore does not publish rate limit headers or enforce API-level throttling.
+  - All rate limits listed above are enforced by third-party infrastructure (The Graph, Infura, Alchemy) — not by Opyn.
+  - Smart-contract interactions are rate-limited by Ethereum block times (~12 seconds per block) for on-chain writes.
+  - The Graph's hosted service announced sunset; production integrations should target the decentralised network.

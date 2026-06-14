@@ -1,0 +1,138 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Opyn
+providerId: opyn
+created: '2026-06-14'
+modified: '2026-06-14'
+tags:
+  - DeFi
+  - Options
+  - Ethereum
+  - Squeeth
+  - Web3
+description: >-
+  Opyn operates as an open, permissionless DeFi protocol — there is no
+  subscription fee, no API key requirement, and no usage-based billing for
+  accessing on-chain data through the Squeeth or Gamma subgraphs. Developers
+  pay only The Graph network query fees (GRT) when accessing subgraphs via the
+  decentralised network, or can use the hosted service at no cost for low-to-
+  moderate query volumes. Interacting directly with Opyn smart contracts on
+  Ethereum mainnet requires only ETH for gas. The protocol charges a funding
+  rate (in-kind, paid in oSQTH) to long Squeeth holders; strategy vaults
+  (Crab) earn funding from short positions to offset ETH price exposure.
+plans:
+  - id: opyn-permissionless
+    name: Permissionless / Open Access
+    type: free
+    description: >-
+      All Opyn protocol data is freely accessible. Query the Squeeth or Gamma
+      subgraphs via The Graph's hosted service or decentralised network without
+      an API key. Direct smart-contract calls on Ethereum mainnet are also
+      permissionless — you need only an RPC endpoint (Infura, Alchemy, or a
+      self-hosted node) and ETH for gas. No registration is required to read
+      data.
+    entries:
+      - label: Subgraph Queries (Hosted Service)
+        description: >-
+          Free GraphQL query access to Opyn subgraphs via The Graph's hosted
+          service. Suitable for development and moderate production traffic.
+        name: subgraph_hosted
+        type: feature
+        metric: feature
+        limit: null
+        timeFrame: unlimited
+        geo: global
+        domains:
+          - https://api.thegraph.com
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Subgraph Queries (Decentralised Network)
+        description: >-
+          Production-grade subgraph queries via The Graph's decentralised
+          network. Requires an API key from The Graph (thegraph.com) and
+          payment in GRT tokens per query. Pricing is set by indexers and
+          varies by query complexity and volume.
+        name: subgraph_decentralised
+        type: usage
+        metric: queries
+        limit: null
+        timeFrame: per_query
+        geo: global
+        domains:
+          - https://gateway.thegraph.com
+        unit: 1
+        price: variable_GRT
+        userMultiplied: false
+      - label: Smart Contract Interaction
+        description: >-
+          Direct read/write calls to Opyn Controller, Strategy, and token
+          contracts on Ethereum mainnet. Reading state (eth_call) is free via
+          any RPC provider. Write operations (mint, deposit, withdraw, hedge)
+          require ETH for gas at market rates.
+        name: contract_interaction
+        type: usage
+        metric: gas_units
+        limit: null
+        timeFrame: per_transaction
+        geo: global
+        domains:
+          - https://mainnet.infura.io
+          - https://eth-mainnet.alchemyapi.io
+        unit: 1
+        price: variable_ETH_gas
+        userMultiplied: false
+
+  - id: opyn-protocol-fees
+    name: Protocol Fees (In-Kind)
+    type: usage
+    description: >-
+      Opyn does not charge API fees; however the protocol levies in-kind fees
+      on financial positions. Long oSQTH holders pay a continuous funding rate
+      (the daily funding) denominated in oSQTH, which is burned from their
+      position over time. Short vaults earn the funding rate as compensation for
+      providing the short side. The Crab Strategy v2 charges no management fee
+      but earns funding by being short Squeeth while remaining approximately
+      ETH-delta-neutral.
+    entries:
+      - label: Squeeth Funding Rate (Long)
+        description: >-
+          Continuous in-kind funding charged to long oSQTH holders. The daily
+          funding rate is approximately (ETH mark price / ETH index price - 1),
+          compounding continuously. The rate fluctuates with market volatility.
+        name: squeeth_funding_long
+        type: usage
+        metric: percent_of_position
+        limit: null
+        timeFrame: continuous
+        geo: global
+        unit: variable
+        price: variable_oSQTH
+        userMultiplied: false
+      - label: Vault Liquidation Penalty
+        description: >-
+          If a short vault's collateral ratio falls below the minimum (150%),
+          liquidators can seize collateral. A liquidation penalty (~10%) is
+          charged from the vault owner's collateral.
+        name: vault_liquidation_penalty
+        type: usage
+        metric: percent_of_collateral
+        limit: 10
+        timeFrame: per_liquidation
+        geo: global
+        unit: 0.10
+        price: variable_ETH
+        userMultiplied: false
+
+references:
+  - name: Opyn Squeeth Documentation
+    url: https://opyn.gitbook.io/squeeth
+  - name: The Graph Pricing (Decentralised Network)
+    url: https://thegraph.com/docs/en/subgraphs/querying/managing-api-keys/
+  - name: Opyn Squeeth Subgraph (Graph Explorer)
+    url: https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r
+notes:
+  - Opyn is a fully permissionless protocol. There is no centralised API provider, no API key, and no subscription fee charged by Opyn itself.
+  - The Graph's decentralised network charges indexers via GRT tokens; integrators pay query fees in GRT when using the decentralised endpoint rather than the hosted service.
+  - Protocol-level funding rates and liquidation penalties are denominated in crypto assets (oSQTH, ETH), not fiat currency.

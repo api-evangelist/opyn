@@ -1,0 +1,198 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+provider: Opyn
+providerId: opyn
+publisherName: Opyn Finance
+serviceCategory: API
+created: '2026-06-14'
+modified: '2026-06-14'
+tags:
+  - DeFi
+  - Options
+  - Ethereum
+  - Squeeth
+  - FinOps
+  - Cost Management
+  - FOCUS
+description: >-
+  FinOps Framework alignment for integrating with the Opyn DeFi options
+  protocol. Unlike traditional SaaS APIs, Opyn has no subscription fee or
+  per-request billing from the protocol itself. Developer costs arise from
+  three sources: The Graph query fees (GRT) for subgraph data access, Ethereum
+  gas costs for on-chain interactions, and in-protocol funding rates paid by
+  long Squeeth holders. This document maps those cost streams to the FOCUS data
+  model for unit-economics analysis.
+principles:
+  - name: Visibility
+    description: >-
+      Track The Graph query costs in GRT, Ethereum gas spend per interaction
+      type (mint, deposit, withdraw, hedge), and protocol funding-rate accrual
+      separately so each cost centre is visible in near real time.
+  - name: Allocation
+    description: >-
+      Tag every RPC call and subgraph query with the consuming team, application,
+      and feature (e.g., vault-monitor, liquidation-bot, strategy-dashboard) to
+      allocate infrastructure costs to the originating business unit.
+  - name: Optimization
+    description: >-
+      Reduce gas costs by batching contract reads via Multicall3, caching
+      subgraph responses for non-real-time data, and minimising on-chain
+      writes. Evaluate Crab strategy vs. manual vault management for
+      cost-efficient ETH² exposure.
+  - name: Accountability
+    description: >-
+      Assign budget owners for The Graph API key spend, RPC provider costs,
+      and the gas budget for strategy bots (hedging, rebalancing). Track
+      protocol funding-rate cost as a position-level P&L line.
+
+domains:
+  - name: The Graph Subgraph Query Fees
+    description: >-
+      Variable cost in GRT tokens paid to The Graph indexers for each query
+      against the Opyn Squeeth or Gamma subgraph via the decentralised network.
+      The hosted service is free but deprecated for production use.
+    costDrivers:
+      - query_count
+      - query_complexity
+      - indexer_pricing_GRT
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Consumption
+      ServiceCategory: API
+      ServiceSubcategory: Data Indexing
+      PricingCategory: Standard
+      PricingUnit: query
+
+  - name: Ethereum Gas (Contract Reads)
+    description: >-
+      eth_call gas cost for reading on-chain state (vault collateral, TWAP
+      oracle prices, oSQTH balance). Most RPC providers bundle free eth_call
+      compute units up to daily limits on their free tier; paid tiers charge
+      per compute unit.
+    costDrivers:
+      - rpc_provider_tier
+      - call_volume_per_day
+      - eth_call_compute_units
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Consumption
+      ServiceCategory: API
+      ServiceSubcategory: RPC
+      PricingCategory: Standard
+      PricingUnit: compute_unit
+
+  - name: Ethereum Gas (Contract Writes)
+    description: >-
+      ETH gas cost for on-chain transactions: minting oSQTH, opening/closing
+      short vaults, depositing/withdrawing from Crab strategy, or triggering
+      hedges. Gas is denominated in ETH (gwei per gas unit) at prevailing
+      Ethereum base fee plus priority fee.
+    costDrivers:
+      - ethereum_base_fee_gwei
+      - transaction_gas_units
+      - priority_fee_gwei
+      - transaction_frequency
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Consumption
+      ServiceCategory: Smart Contract
+      ServiceSubcategory: Ethereum Mainnet
+      PricingCategory: Variable
+      PricingUnit: gas_units
+
+  - name: Squeeth Funding Rate (Protocol Cost)
+    description: >-
+      Continuous in-kind funding charged to long oSQTH positions. Economically
+      equivalent to a cost of carry. Long holders' oSQTH balance decays over
+      time at the daily funding rate (approximately normalised volatility squared
+      divided by 17.5). Track as a position P&L deduction, not a cash outlay.
+    costDrivers:
+      - oSQTH_position_size
+      - ETH_implied_volatility
+      - days_held
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Other
+      ServiceCategory: Smart Contract
+      ServiceSubcategory: Options Protocol
+      PricingCategory: Variable
+      PricingUnit: oSQTH_funding
+
+  - name: RPC Provider Subscription
+    description: >-
+      Fixed monthly subscription to an Ethereum RPC provider (Infura, Alchemy,
+      QuickNode, or self-hosted) needed for contract reads and transaction
+      submission. Costs range from $0 (free tier) to $200-$1,000+/month for
+      high-throughput production workloads.
+    costDrivers:
+      - rpc_provider_tier
+      - monthly_call_volume
+      - archive_node_requirement
+    focusMapping:
+      ChargeCategory: Purchase
+      ChargeClass: Recurring
+      ServiceCategory: API
+      ServiceSubcategory: RPC Provider
+      PricingCategory: Standard
+      PricingUnit: subscription_month
+
+focusFields:
+  required:
+    - BillingPeriodStart
+    - BillingPeriodEnd
+    - ChargeCategory
+    - ChargePeriodStart
+    - ChargePeriodEnd
+    - ProviderName
+    - PublisherName
+    - InvoiceIssuerName
+    - ServiceName
+    - ServiceCategory
+    - BilledCost
+    - EffectiveCost
+    - ListCost
+    - ContractedCost
+    - PricingCategory
+    - PricingUnit
+    - PricingQuantity
+  recommended:
+    - SubAccountId
+    - SubAccountName
+    - ResourceId
+    - ResourceName
+    - ResourceType
+    - Region
+    - Tags
+  opynSpecific:
+    - x-opyn-vault-id (short vault NFT token ID from ShortPowerPerp)
+    - x-opyn-strategy (squeeth-long / crab-v2 / bull / gamma-vault)
+    - x-opyn-chain-id (1 for Ethereum mainnet)
+    - x-opyn-transaction-hash (Ethereum tx hash for on-chain write cost attribution)
+    - x-opyn-funding-rate-daily (daily funding rate at time of position open)
+    - x-graph-query-id (The Graph query identifier for subgraph cost attribution)
+
+unitEconomics:
+  - metric: Gas Cost per Strategy Rebalance
+    formula: gas_units * (base_fee_gwei + priority_fee_gwei) / 1e9 * ETH_price_USD
+    insight: Compare automated Crab hedge gas cost against funding-rate revenue to ensure hedge bots are economically viable.
+  - metric: Subgraph Query Cost per Active User
+    formula: total_GRT_query_fees_USD / distinct_users_queried_per_month
+    insight: Size the data infrastructure cost per user of a Squeeth-powered application.
+  - metric: Funding Rate Cost per Day (Long Position)
+    formula: oSQTH_balance * daily_funding_rate * oSQTH_price_USD
+    insight: Daily USD cost of holding a long oSQTH position; compare against expected ETH² upside to evaluate position economics.
+  - metric: Total Infrastructure Cost per Vault Managed
+    formula: (rpc_subscription_USD + graph_query_USD + hedge_gas_USD) / vault_count
+    insight: Unit cost of operating the monitoring and automation infrastructure per short vault managed.
+
+notes:
+  - Opyn charges no API fees. All costs are infrastructure-layer (RPC, subgraph) or protocol-native (gas, funding rate).
+  - Funding rate is an in-kind cost (oSQTH decay), not a cash payment — model it as a reduction in position mark-to-market value.
+  - The Graph hosted service is free but not SLA-backed; migrate to the decentralised network for production and include GRT query costs in FinOps tracking.
+  - For high-frequency hedging bots, gas optimisation (batching, timing around low base-fee windows) has a material impact on strategy profitability.
