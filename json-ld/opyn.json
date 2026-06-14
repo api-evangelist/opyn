@@ -1,0 +1,97 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.opyn.co",
+  "name": "Opyn",
+  "url": "https://www.opyn.co",
+  "description": "Opyn is a DeFi options protocol on Ethereum mainnet best known for Squeeth (squared ETH), a Power Perpetual that gives traders continuous exposure to ETH squared without liquidation risk on long positions. The protocol encompasses the Gamma Protocol (v2 options with cash-settled European options), the Crab Strategy (automated ETH squared/ETH delta-neutral vault), Bull Strategy, and Opyn Markets (concentrated-liquidity perps).",
+  "sameAs": [
+    "https://squeeth.opyn.co",
+    "https://github.com/opynfinance",
+    "https://x.com/opyn_",
+    "https://discord.gg/2NFdXaE",
+    "https://medium.com/opyn"
+  ],
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg"
+  },
+  "knowsAbout": [
+    "DeFi",
+    "Options",
+    "Ethereum",
+    "Squeeth",
+    "Power Perpetual",
+    "Derivatives",
+    "Cryptocurrency",
+    "Web3",
+    "Smart Contracts",
+    "Crab Strategy",
+    "Vault"
+  ],
+  "subjectOf": [
+    {
+      "@type": "WebAPI",
+      "@id": "https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r",
+      "name": "Opyn Squeeth Subgraph API",
+      "description": "GraphQL API powered by The Graph that indexes all on-chain Squeeth events on Ethereum mainnet. Enables developers to query oSQTH positions, short vaults, vault collateral and debt, funding (mark/index) history, Crab strategy deposits and withdrawals, and liquidation events.",
+      "url": "https://thegraph.com/explorer/subgraphs/Ao1QSKEQzsnNyyGKR1Faurjmkr6oNVTbgdxy6diAw9r?view=Overview&chain=mainnet",
+      "documentation": "https://opyn.gitbook.io/squeeth",
+      "termsOfService": "https://opyn.gitbook.io/squeeth",
+      "provider": {
+        "@type": "Organization",
+        "name": "Opyn",
+        "url": "https://www.opyn.co"
+      },
+      "additionalType": "GraphQL"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet",
+      "name": "Opyn Gamma Subgraph API",
+      "description": "GraphQL API via The Graph that indexes the Gamma Protocol (Opyn v2) on Ethereum mainnet. Covers oToken creation, option series, vault collateral, minting and burning events, settlement, and operator authorisations for European cash-settled options.",
+      "url": "https://github.com/opynfinance/Gamma-Subgraph",
+      "documentation": "https://github.com/opynfinance/v2-documentation",
+      "provider": {
+        "@type": "Organization",
+        "name": "Opyn",
+        "url": "https://www.opyn.co"
+      },
+      "additionalType": "GraphQL"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.squeethportal.xyz",
+      "name": "Squeeth Portal Auction API",
+      "description": "Web interface and data feed for the Crab Strategy weekly auction mechanism. Provides auction status, hedging queue, and rebalancing parameters used by Crab v2 and Jumbo Crab vaults.",
+      "url": "https://www.squeethportal.xyz/auction",
+      "documentation": "https://opyn.gitbook.io/squeeth/crab-strategy/introduction",
+      "provider": {
+        "@type": "Organization",
+        "name": "Opyn",
+        "url": "https://www.opyn.co"
+      }
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Opyn Smart Contracts",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Controller Contract (Mainnet)",
+        "url": "https://etherscan.io/address/0x64187ae08781B09368e6253F9E94951243A493D5"
+      },
+      {
+        "@type": "Offer",
+        "name": "WPowerPerp / oSQTH Contract (Mainnet)",
+        "url": "https://etherscan.io/address/0xf1B99e3E573A1a9C5E6B2Ce818b617F0E664E86B"
+      },
+      {
+        "@type": "Offer",
+        "name": "CrabStrategyV2 Contract (Mainnet)",
+        "url": "https://etherscan.io/address/0x3B960E47784150F5a63777201ee2B15253D713e8"
+      }
+    ]
+  }
+}
