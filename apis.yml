@@ -115,6 +115,8 @@ apis:
   - type: GitHubRepository
     url: https://github.com/opynfinance/squeeth-monorepo
 common:
+- type: DomainSecurity
+  url: security/opyn-domain-security.yml
 - type: Website
   url: https://www.opyn.co
 - type: Website
