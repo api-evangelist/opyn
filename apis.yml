@@ -59,6 +59,15 @@ apis:
   - Subgraph
   - GraphQL
   - Positions
+  - Vault
+  - Funding Rate
+  - Crab Strategy
+  - Liquidations
+  tags_raw:
+  - Squeeth
+  - Subgraph
+  - GraphQL
+  - Positions
   - Vaults
   - Funding Rate
   - Crab Strategy
@@ -83,6 +92,14 @@ apis:
   humanURL: https://github.com/opynfinance/Gamma-Subgraph
   baseURL: https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet
   tags:
+  - Options
+  - Gamma Protocol
+  - Subgraph
+  - GraphQL
+  - oTokens
+  - Vault
+  - Settlement
+  tags_raw:
   - Options
   - Gamma Protocol
   - Subgraph
