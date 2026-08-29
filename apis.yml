@@ -12,6 +12,18 @@ description: Opyn is a DeFi options protocol on Ethereum mainnet best known for 
   smart-contract interaction through the Controller, Oracle, WPowerPerp, and Strategy
   contracts. No centralised REST API key is required; data access is permissionless
   through the subgraph and blockchain.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: open
@@ -144,6 +156,10 @@ apis:
   - type: GitHubRepository
     url: https://github.com/opynfinance/squeeth-monorepo
 common:
+- type: IssueTracker
+  url: https://github.com/opynfinance/squeeth-monorepo/issues
+- type: Releases
+  url: https://github.com/opynfinance/squeeth-monorepo/releases
 - type: DomainSecurity
   url: security/opyn-domain-security.yml
 - type: Website
