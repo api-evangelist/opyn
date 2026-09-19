@@ -143,6 +143,12 @@ apis:
   humanURL: https://www.squeethportal.xyz/auction
   baseURL: https://www.squeethportal.xyz
   tags:
+  - Auctions
+  - Crab Strategy
+  - Hedging
+  - Rebalancing
+  - Squeeth
+  tags_raw:
   - Auction
   - Crab Strategy
   - Hedging
