@@ -13,16 +13,21 @@ description: Opyn is a DeFi options protocol on Ethereum mainnet best known for 
   contracts. No centralised REST API key is required; data access is permissionless
   through the subgraph and blockchain.
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - opynfinance/gamma-subgraph
+    - opynfinance/squeeth-monorepo
+    - opynfinance/v2-documentation
   open_source: unknown
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
