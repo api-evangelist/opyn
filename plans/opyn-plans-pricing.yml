@@ -141,3 +141,33 @@ notes:
   - Opyn is a fully permissionless protocol. There is no centralised API provider, no API key, and no subscription fee charged by Opyn itself.
   - The Graph's decentralised network charges indexers via GRT tokens; integrators pay query fees in GRT when using the decentralised endpoint rather than the hosted service.
   - Protocol-level funding rates and liquidation penalties are denominated in crypto assets (oSQTH, ETH), not fiat currency.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units:
+  - feature
+  - request
+  plans:
+  - name: Permissionless / Open Access
+    access: free
+    model: metered
+    model_how: derived
+    units:
+    - feature
+    - other
+    - request
+    periods:
+    - other
+    - per-use
+    - unbounded
+  - name: Protocol Fees (In-Kind)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - other
+    - unbounded
